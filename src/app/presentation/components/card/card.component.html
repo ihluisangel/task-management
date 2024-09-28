@@ -1,0 +1,53 @@
+<div class="w-full max-w-sm    rounded-lg shadow bg-neutral-300  text-neutral-50">
+  <div class="flex justify-between px-4 pt-4">
+    <p class="font-semibold text-lg">TITLE</p>
+    <button id="dropdownButton" data-dropdown-toggle="dropdown"
+      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+      type="button">
+      <span class="sr-only">Open dropdown</span>
+      <ng-icon size="24" name="heroEllipsisHorizontal"></ng-icon>
+    </button>
+    <!-- Dropdown menu -->
+    <div id="dropdown" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
+      <ul class="py-2" aria-labelledby="dropdownButton">
+        <li>
+          <a href="#"
+            class="block px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+            <ng-icon name="heroPencil" class="mr-2"></ng-icon>
+            Edit
+          </a>
+        </li>
+
+        <li>
+          <a href="#"
+            class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+            <ng-icon name="heroTrash" class="mr-2"></ng-icon>
+            Delete
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="flex justify-between px-4 pt-4">
+    <p class="font-semibold">4 Points</p>
+    <app-label type="neutral" name="TODAY" icon="heroClock" />
+  </div>
+  <div class="flex justify-start px-4 pt-4 space-x-1">
+    <app-label type="secondary" name="IOS APP" />
+
+    <app-label type="tertiary" name="ANDROID" />
+  </div>
+  <div class="flex justify-between px-4 pt-4 space-x-1 pb-4">
+    <img class=" w-8 h-8 rounded-full" src="assets/images/avatar.png" alt="Rounded avatar">
+
+    <div class="flex flex-row items-center space-x-3">
+      <ng-icon name="heroPaperClip"></ng-icon>
+      <span class="flex items-center">
+        {{5}} <ng-icon name="heroSquare3Stack3d"></ng-icon>
+      </span>
+      <span class="flex items-center">
+        {{3}} <ng-icon name="heroChatBubbleLeft"></ng-icon>
+      </span>
+    </div>
+  </div>
+</div>

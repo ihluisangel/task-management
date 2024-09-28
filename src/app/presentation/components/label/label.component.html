@@ -1,0 +1,13 @@
+<div class="relative">
+  <!-- Fondo con opacidad -->
+  <div class="absolute inset-0 bg-opacity-10 z-0 rounded" [class]="[getBg()]"></div>
+  <!-- Contenido -->
+  <div class="relative z-10">
+    <div class="flex flex-row items-center px-3 h-8 font-semibold" [class]="[getText()]">
+      @if(icon!==null){
+      <ng-icon [name]="icon" class="mr-2"></ng-icon>
+      }
+      <span>{{name}}</span>
+    </div>
+  </div>
+</div>

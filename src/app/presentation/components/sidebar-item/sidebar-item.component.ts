@@ -13,14 +13,14 @@ import { heroBars3, heroSquares2x2 } from '@ng-icons/heroicons/outline';
 })
 export class SidebarItemComponent {
 
-  @Input() selected: boolean = false;
-  @Input() icon: string = 'heroSquares2x2'; // default
-  @Input() name: string = ''; // default
+  @Input() selected = false;
+  @Input() icon = 'heroSquares2x2'; // default
+  @Input() name = ''; // default
 
-  @Output() onPress = new EventEmitter<void>();
+  @Output() press = new EventEmitter<void>();
 
 
-  press() {
-    this.onPress.emit();
+  onPress() {
+    this.press.emit();
   }
 }

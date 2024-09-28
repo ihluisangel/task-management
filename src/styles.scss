@@ -2,3 +2,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  // buttons
+  .btn-base {
+    @apply px-5 py-2.5 text-sm font-medium inline-flex items-center focus:ring-4 focus:outline-none rounded-lg text-center justify-center disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .button-primary {
+    @apply btn-base  focus:z-10  focus:ring-gray-700 bg-primary-300 text-white hover:bg-primary-200;
+  }
+
+  .button-ligth {
+    @apply btn-base  focus:z-10  focus:ring-gray-700 bg-transparent text-white hover:bg-neutral-100;
+  }
+
+  .btn-primary-outline {
+    @apply btn-base text-primary-300 hover:border-primary-200 border border-primary-300  focus:ring-primary-300;
+  }
+  .btn-ligth-outline {
+    @apply btn-base text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-800 focus:ring-primary-300   dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-200 dark:focus:ring-primary-800;
+  }
+  .btn-icon {
+    @apply text-sm p-2.5;
+  }
+}
