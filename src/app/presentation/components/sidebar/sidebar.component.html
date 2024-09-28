@@ -1,0 +1,18 @@
+<aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+  aria-label="Sidebar">
+  <div class="h-full pl-0 sm:pl-4 sm:py-4 overflow-y-auto bg-neutral-400">
+    <div class="bg-neutral-300 flex flex-col sm:rounded-3xl h-full">
+      <div class="flex justify-center my-5">
+        <img class="justify-center" src="assets/images/logo-white.png" width="40" height="40" alt="Logo">
+      </div>
+      <ul class="space-y-0  mt-5">
+        <li>
+          <app-sidebar-item [name]="'DASHBOARD'" [icon]="'heroSquares2x2'" />
+        </li>
+        <li>
+          <app-sidebar-item [name]="'MY TASK'" [icon]="'heroBars3'" />
+        </li>
+      </ul>
+    </div>
+  </div>
+</aside>

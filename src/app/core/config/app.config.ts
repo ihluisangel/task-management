@@ -8,7 +8,8 @@ import { HttpLink } from 'apollo-angular/http';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideApollo(() => {
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideApollo(() => {
       const httpLink = inject(HttpLink);
 
       return {
@@ -17,5 +18,6 @@ export const appConfig: ApplicationConfig = {
         }),
         cache: new InMemoryCache(),
       };
-    })]
+    }),
+  ]
 };
