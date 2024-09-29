@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TaskEntity } from '../../../../domain/entities/task.entity';
+import {
+  GetTasksUseCase
+} from '../../../../domain/use-cases/task/get-tasks.usecase';
 import {
   Column,
   Task,
@@ -12,7 +17,7 @@ import {
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
-export class GridComponent {
+export class GridComponent implements OnInit {
   columns: Column[] = [
     {
       listName: 'Planned',
@@ -63,6 +68,22 @@ export class GridComponent {
 
   draggedTask: Task | null = null;
   sourceListName: string | null = null;
+
+  response$: Observable<TaskEntity[]> | undefined;
+  datos: TaskEntity [] = [];
+
+  constructor(private _getTaskUseCase : GetTasksUseCase){
+
+  }
+  ngOnInit(){
+    this.response$ = this._getTaskUseCase.execute();
+    this.response$.subscribe(
+      (data: TaskEntity []) => {
+        console.log(data);
+        this.datos = data;
+      }
+    );
+  }
 
   // On drag start, store the task and the source column
   onDragStart(event: DragEvent, task: Task, listName: string) {

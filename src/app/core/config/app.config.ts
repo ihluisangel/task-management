@@ -1,23 +1,41 @@
-import { ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
-import { InMemoryCache } from '@apollo/client/core';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { environment } from '../../../environments/environment';
+import {
+  TaskImplementationService
+} from '../../data/repositories/task/task-implementation.service';
+import { TaskRepository } from '../../domain/repositories/task.repository';
+import { authLink } from '../interceptors/auth.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(), provideApollo(() => {
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideHttpClient(),
+    provideApollo(() => {
       const httpLink = inject(HttpLink);
+      const link = ApolloLink.from([
+        authLink,
+        httpLink.create({ uri: environment.api_url })
+      ]);
 
       return {
-        link: httpLink.create({
-          uri: '<%= endpoint %>',
-        }),
+        link,
         cache: new InMemoryCache(),
       };
     }),
-  ]
+
+    // Inject dependencies
+    { provide: TaskRepository, useClass: TaskImplementationService }
+  ],
 };
