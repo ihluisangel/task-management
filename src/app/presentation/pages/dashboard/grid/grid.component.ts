@@ -1,10 +1,12 @@
-import { Component, effect } from '@angular/core';
+import { AfterViewChecked, Component, effect } from '@angular/core';
+import { initDropdowns } from 'flowbite';
 import { ColumnEntity } from '../../../../domain/entities/column.entity';
 import { TaskEntity } from '../../../../domain/entities/task.entity';
 import {
-  TaskColumnComponent,
+  TaskColumnComponent
 } from '../../../components/task-column/task-column.component';
 import { TaskStateService } from '../../../state/task/task-state.service';
+
 
 @Component({
   selector: 'app-grid',
@@ -13,19 +15,33 @@ import { TaskStateService } from '../../../state/task/task-state.service';
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
-export class GridComponent  {
-
+export class GridComponent implements AfterViewChecked {
   columns: ColumnEntity[] = [];
 
   draggedTask: TaskEntity | null = null;
   sourceListStatus: string | null = null;
 
-  datos: TaskEntity [] = [];
+  datos: TaskEntity[] = [];
 
-  constructor(public taskState : TaskStateService){
+  private initialized = false;
+
+  constructor(
+    public taskState: TaskStateService,
+  ) {
     effect(() => {
-      this.columns = this.taskState.columns
+      this.columns = this.taskState.columns;
+      this.initialized = false;
+
+      /* setTimeout(() => {
+        initDropdowns()
+      }, 0); */
     });
+  }
+  ngAfterViewChecked(){
+    if (!this.initialized && this.columns.length > 0) {
+      initDropdowns()
+      this.initialized = true;
+    }
   }
 
   // On drag start, store the task and the source column

@@ -1,15 +1,15 @@
 <div class="w-full max-w-sm    rounded-lg shadow bg-neutral-300  text-neutral-50">
   <div class="flex justify-between px-4 pt-4">
     <p class="font-semibold text-lg">{{task.name}}</p>
-    <button id="dropdownButton" data-dropdown-toggle="dropdown"
-      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+    <button [id]="'dropDownBtn'+task.id" [attr.data-dropdown-toggle]="'dropdown'+task.id"
+      class="inline-block text-neutral-100  hover:bg-neutral-200 focus:ring-4 focus:outline-none focus:ring-gray-700 rounded-lg text-sm p-1.5"
       type="button">
       <span class="sr-only">Open dropdown</span>
       <ng-icon size="24" name="heroEllipsisHorizontal"></ng-icon>
     </button>
     <!-- Dropdown menu -->
-    <div id="dropdown" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
-      <ul class="py-2" aria-labelledby="dropdownButton">
+    <div [id]="'dropdown'+task.id" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
+      <ul class="py-2" [attr.aria-labelledby]="'dropDownBtn'+task.id">
         <li>
           <a href="#"
             class="block px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
