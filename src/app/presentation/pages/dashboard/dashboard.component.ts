@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {
   heroBars3,
@@ -10,6 +10,7 @@ import {
   SearchBarComponent
 } from '../../components/search-bar/search-bar.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { TaskStateService } from '../../state/task/task-state.service';
 import { GridComponent } from './grid/grid.component';
 
 @Component({
@@ -25,6 +26,10 @@ import { GridComponent } from './grid/grid.component';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  constructor(public taskState: TaskStateService){}
 
+  ngOnInit(){
+    this.taskState.loadTasks();
+  }
 }

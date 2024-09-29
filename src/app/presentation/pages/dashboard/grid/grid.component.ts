@@ -1,14 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, effect } from '@angular/core';
+import { ColumnEntity } from '../../../../domain/entities/column.entity';
 import { TaskEntity } from '../../../../domain/entities/task.entity';
 import {
-  GetTasksUseCase
-} from '../../../../domain/use-cases/task/get-tasks.usecase';
-import {
-  Column,
-  Task,
   TaskColumnComponent,
 } from '../../../components/task-column/task-column.component';
+import { TaskStateService } from '../../../state/task/task-state.service';
 
 @Component({
   selector: 'app-grid',
@@ -17,78 +13,25 @@ import {
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
-export class GridComponent implements OnInit {
-  columns: Column[] = [
-    {
-      listName: 'Planned',
-      list: [
-        {
-          title: 'Task 1',
-          description: 'Task 1 Description',
-          assignee: 'John',
-          date: '2024-09-01',
-        },
-        {
-          title: 'Task 2',
-          description: 'Task 2 Description',
-          assignee: 'Jane',
-          date: '2024-09-02',
-        },
-        {
-          title: 'Task 3',
-          description: 'Task 2 Description',
-          assignee: 'Jane',
-          date: '2024-09-02',
-        },
-        {
-          title: 'Task 5',
-          description: 'Task 2 Description',
-          assignee: 'Jane',
-          date: '2024-09-02',
-        },
-      ],
-    },
-    {
-      listName: 'Selected ',
-      list: [],
-    },
-    {
-      listName: 'In progress',
-      list: [],
-    },
-    {
-      listName: 'Ready',
-      list: [],
-    },
-    {
-      listName: 'Finish',
-      list: [],
-    },
-  ];
+export class GridComponent  {
 
-  draggedTask: Task | null = null;
-  sourceListName: string | null = null;
+  columns: ColumnEntity[] = [];
 
-  response$: Observable<TaskEntity[]> | undefined;
+  draggedTask: TaskEntity | null = null;
+  sourceListStatus: string | null = null;
+
   datos: TaskEntity [] = [];
 
-  constructor(private _getTaskUseCase : GetTasksUseCase){
-
-  }
-  ngOnInit(){
-    this.response$ = this._getTaskUseCase.execute();
-    this.response$.subscribe(
-      (data: TaskEntity []) => {
-        console.log(data);
-        this.datos = data;
-      }
-    );
+  constructor(public taskState : TaskStateService){
+    effect(() => {
+      this.columns = this.taskState.columns
+    });
   }
 
   // On drag start, store the task and the source column
-  onDragStart(event: DragEvent, task: Task, listName: string) {
+  onDragStart(event: DragEvent, task: TaskEntity, status: string) {
     this.draggedTask = task;
-    this.sourceListName = listName;
+    this.sourceListStatus = status;
   }
 
   // Allow drop
@@ -100,12 +43,12 @@ export class GridComponent implements OnInit {
   onDrop(event: DragEvent, targetListName: string) {
     event.preventDefault();
 
-    if (this.draggedTask && this.sourceListName) {
+    if (this.draggedTask && this.sourceListStatus) {
       const sourceColumn = this.columns.find(
-        (col) => col.listName === this.sourceListName
+        (col) => col.status === this.sourceListStatus
       );
       const targetColumn = this.columns.find(
-        (col) => col.listName === targetListName
+        (col) => col.status === targetListName
       );
 
       if (sourceColumn && targetColumn) {
@@ -122,6 +65,6 @@ export class GridComponent implements OnInit {
 
     // Clear the temporary state
     this.draggedTask = null;
-    this.sourceListName = null;
+    this.sourceListStatus = null;
   }
 }

@@ -1,15 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { ColumnEntity } from '../../../domain/entities/column.entity';
+import { TaskEntity } from '../../../domain/entities/task.entity';
 import { CardComponent } from '../card/card.component';
-export interface Task {
-  title: string;
-  description: string;
-  assignee: string;
-  date: string;
-}
-export interface Column {
-  listName: string;
-  list: Task[];
-}
 
 @Component({
   selector: 'app-task-column',
@@ -19,8 +11,11 @@ export interface Column {
   styleUrl: './task-column.component.scss',
 })
 export class TaskColumnComponent {
-  @Input() column!: Column;
-  @Input() dragStart!: (event: DragEvent, task: Task, listName: string) => void;
+  @Input() column!: ColumnEntity;
+  @Input() dragStart!: (
+    event: DragEvent,
+    task: TaskEntity,
+    status: string) => void;
   @Input() dragOver!: (event: DragEvent) => void;
-  @Input() dragDrop!: (event: DragEvent, listName: string) => void;
+  @Input() dragDrop!: (event: DragEvent, status: string) => void;
 }

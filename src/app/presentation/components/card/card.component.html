@@ -1,6 +1,6 @@
 <div class="w-full max-w-sm    rounded-lg shadow bg-neutral-300  text-neutral-50">
   <div class="flex justify-between px-4 pt-4">
-    <p class="font-semibold text-lg">TITLE</p>
+    <p class="font-semibold text-lg">{{task.name}}</p>
     <button id="dropdownButton" data-dropdown-toggle="dropdown"
       class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
       type="button">
@@ -29,16 +29,17 @@
     </div>
   </div>
   <div class="flex justify-between px-4 pt-4">
-    <p class="font-semibold">4 Points</p>
-    <app-label type="neutral" name="TODAY" icon="heroClock" />
+    <p class="font-semibold">{{task.pointEstimate | pointEstimate}}</p>
+    <app-label type="neutral" [name]="task.dueDate | dueDate" icon="heroClock" />
   </div>
   <div class="flex justify-start px-4 pt-4 space-x-1">
-    <app-label type="secondary" name="IOS APP" />
+    @for (tag of task.tags; track $index) {
+      <app-label [type]="getTag(tag, 'type')" [name]="getTag(tag, 'name')" />
+    }
 
-    <app-label type="tertiary" name="ANDROID" />
   </div>
   <div class="flex justify-between px-4 pt-4 space-x-1 pb-4">
-    <img class=" w-8 h-8 rounded-full" src="assets/images/avatar.png" alt="Rounded avatar">
+    <img class=" w-8 h-8 rounded-full" [src]="task.assignee.avatar" alt="Rounded avatar">
 
     <div class="flex flex-row items-center space-x-3">
       <ng-icon name="heroPaperClip"></ng-icon>

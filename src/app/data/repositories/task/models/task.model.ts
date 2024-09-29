@@ -1,3 +1,5 @@
+import { StatusTask } from "../../../../domain/entities/task.entity";
+
 export interface TransactionTask {
   data: DataTask;
 }
@@ -12,7 +14,7 @@ export interface TaskModel {
   name:          string;
   createdAt?:     Date;
   pointEstimate: string;
-  status:        string;
+  status:        StatusTask;
   dueDate:       Date;
   tags:          string[];
   position:      number;
