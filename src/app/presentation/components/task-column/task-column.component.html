@@ -1,0 +1,17 @@
+<div class=" flex flex-col min-w-[300px] max-w-[400px] w-full h-full">
+  <h2 class="text-lg font-semibold mb-4 text-neutral-50 ">{{ column.listName }}</h2>
+
+  <!-- Lista de tareas -->
+   <div class="flex flex-col space-y-2">
+    @for (task of column.list; track task.title;) {
+      <app-card class="cursor-move" draggable="true" (dragstart)="dragStart($event, task, column.listName)"></app-card>
+      }
+   </div>
+
+
+  <!-- Área de drop -->
+  <div class="min-h-36  flex-grow" (dragover)="dragOver($event)"
+    (drop)="dragDrop($event, column.listName)">
+  </div>
+</div>
+

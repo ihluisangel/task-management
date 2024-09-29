@@ -1,1 +1,10 @@
-<p>grid works!</p>
+
+<div class="overflow-x-auto">
+  <div class="grid grid-flow-col auto-cols-max gap-4">
+    @for (column of columns; track column.listName) {
+      <app-task-column [column]="column" [dragStart]="onDragStart.bind(this)"
+      [dragOver]="onDragOver.bind(this)"
+      [dragDrop]="onDrop.bind(this)"/>
+    }
+  </div>
+</div>

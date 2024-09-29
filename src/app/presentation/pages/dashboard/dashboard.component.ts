@@ -6,11 +6,11 @@ import {
   heroPlus,
   heroSquares2x2
 } from '@ng-icons/heroicons/outline';
-import { CardComponent } from '../../components/card/card.component';
 import {
   SearchBarComponent
 } from '../../components/search-bar/search-bar.component';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { GridComponent } from './grid/grid.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +19,8 @@ import { SidebarComponent } from '../../components/sidebar/sidebar.component';
     NgIconComponent,
     CommonModule, SidebarComponent,
     SearchBarComponent,
-    CardComponent],
+    GridComponent
+  ],
   providers: [provideIcons({ heroSquares2x2, heroBars3, heroPlus })],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
