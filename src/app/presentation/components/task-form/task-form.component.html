@@ -1,0 +1,85 @@
+<div class="relative bg-neutral-200 rounded-lg shadow:bg-gray-700">
+
+  <div class="p-4 md:p-5">
+
+    <input id="name" [(ngModel)]="form.name"
+      class="bg-neutral-200 border-none focus:ring-0  text-xl font-semibold rounded-lg outline-none block w-full p-2.5 placeholder-gray-400 text-white mb-4"
+      placeholder="Name" required />
+
+
+    <div class="grid grid-cols-4 gap-2 mb-4">
+
+      <button data-dropdown-toggle="dropdown" (click)="$event.preventDefault()" class="flex flex-row items-center p-2 text-white">
+        <img src="assets/images/icon-point.png" width="24" height="24" class="mr-2" alt="">
+        {{form.pointEstimate === null ? 'Estimatee' : pointEstimateList[form.pointEstimate]}}
+      </button>
+      <div #dropdown1  id="dropdown" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
+        <ul class="py-2">
+          @for (key of keysPoints; track key) {
+            <li>
+              <button (click)="changePoint(key)" class="flex flex-row items-center px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+                <img src="assets/images/icon-point.png" width="24" height="24" class="mr-2" alt="">
+                {{pointEstimateList[key]}}
+              </button>
+            </li>
+          }
+
+        </ul>
+      </div>
+
+      <button data-dropdown-toggle="dropdown2" (click)="$event.preventDefault()" class="flex flex-row items-center p-2 text-white">
+        <img class=" w-8 h-8 rounded-full mr-2" src="assets/images/avatar.png"   alt="Rounded avatar">
+        {{form.assignee?.fullName ?? 'Assignee'}}
+      </button>
+      <div #dropdown2 id="dropdown2" class="z-20 hidden text-base list-none  rounded-lg shadow w-52 bg-neutral-200 border border-neutral-100">
+        <ul class="py-2">
+          @for (user of userState.users; track $index) {
+            <li>
+              <button (click)="$event.preventDefault();changeUser(user)" class="flex flex-row justify-start items-center px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+                <img src="assets/images/avatar.png"  class="w-8 h-8 rounded-full mr-2" alt="">
+                {{user.fullName}}
+              </button>
+            </li>
+          }
+        </ul>
+      </div>
+      <button data-dropdown-toggle="dropdown3" (click)="$event.preventDefault()" >
+        @if (form.tags.length === 0) {
+          <app-label type="neutral" name="Tag"></app-label>
+        } @else {
+          <div class="flex flex-row justify-center">
+            <app-label type="neutral" [name]="taglist[form.tags[0]].name"></app-label>
+            @if (form.tags.length > 1) {
+              <span class="ml-1 text-neutral-50">{{form.tags.length}} +</span>
+            }
+          </div>
+        }
+      </button>
+      <div id="dropdown3" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
+        <ul class="py-2">
+          <li>
+            @for (key of keysTag; track key) {
+              <div class="flex items-center ps-3">
+                <input [id]="'checkbox'+key" type="checkbox" [value]="isSelected(key)" (change)="$event.preventDefault();changeKey(key)" class="w-4 h-4 text-primary-300 rounded  ring-offset-gray-700 focus:ring-offset-gray-700 focus:ring-2 bg-gray-600 border-gray-500">
+                <label [for]="'checkbox'+key" class="w-full py-3 ms-2 text-sm font-medium text-neutral-50">{{taglist[key].name}}</label>
+              </div>
+            }
+          </li>
+
+        </ul>
+      </div>
+
+     <button  data-dropdown-toggle="dropdown4" (click)="$event.preventDefault(); openDatePicker= !openDatePicker" >
+        <app-label type="neutral" [name]="form.dueDate === null? 'Pick date' : (form.dueDate|date)"></app-label>
+      </button>
+
+      <div #dropdown4  id="dropdown4"  class="z-20 hidden text-base list-none  rounded-lg shadow  bg-neutral-200 border border-neutral-100">
+        <app-datepicker [dateValue]="form.date" (changeValue)="changeDate($event)"></app-datepicker>
+      </div>
+    </div>
+    <div class="flex flex-row space-x-2 justify-end">
+      <button class="button-ligth" (click)="finish.emit()" >Cancel</button>
+      <button class="button-primary" (click)="submit()">Update</button>
+    </div>
+  </div>
+</div>

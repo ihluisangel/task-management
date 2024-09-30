@@ -1,7 +1,14 @@
+import { Tag } from "../../../../domain/entities/tag.type";
 import { StatusTask } from "../../../../domain/entities/task.entity";
+import { UserModel } from "../../user/model/user.model";
 
 export interface TransactionTask {
   data: DataTask;
+}
+export interface TransactionCreateTask {
+  data: {
+    createTask: TaskModel;
+  };
 }
 
 export interface DataTask {
@@ -16,13 +23,8 @@ export interface TaskModel {
   pointEstimate: string;
   status:        StatusTask;
   dueDate:       Date;
-  tags:          string[];
+  tags:          Tag[];
   position:      number;
-  assignee:      AssigneeModel;
+  assignee:      UserModel;
 }
 
-export interface AssigneeModel {
-  avatar:   string;
-  id:       string;
-  fullName: string;
-}

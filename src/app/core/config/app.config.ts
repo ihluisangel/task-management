@@ -13,7 +13,11 @@ import { environment } from '../../../environments/environment';
 import {
   TaskImplementationService
 } from '../../data/repositories/task/task-implementation.service';
+import {
+  UserImplentationService
+} from '../../data/repositories/user/user-implentation.service';
 import { TaskRepository } from '../../domain/repositories/task.repository';
+import { UserRepository } from '../../domain/repositories/user.respository';
 import { authLink } from '../interceptors/auth.interceptor';
 import { routes } from './app.routes';
 
@@ -36,6 +40,7 @@ export const appConfig: ApplicationConfig = {
     }),
 
     // Inject dependencies
-    { provide: TaskRepository, useClass: TaskImplementationService }
+    { provide: TaskRepository, useClass: TaskImplementationService },
+    { provide: UserRepository, useClass: UserImplentationService },
   ],
 };

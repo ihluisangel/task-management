@@ -20,12 +20,20 @@
           <ng-icon size="24" name="heroSquares2x2"></ng-icon>
         </button>
       </div>
-      <button class="button-primary btn-icon">
+      <button class="button-primary btn-icon" (click)="openModal('crud-modal')">
         <ng-icon size="24" name="heroPlus"></ng-icon>
       </button>
     </div>
     <div class="mt-6">
-      <app-grid  />
+      <app-grid />
     </div>
   </div>
 </div>
+
+<!-- Modal toggle -->
+
+<!-- Main modal -->
+
+<app-modal id="crud-modal">
+<app-task-form (save)="beforeCloseModal($event)" (finish)="closeModal('crud-modal')"/>
+</app-modal>

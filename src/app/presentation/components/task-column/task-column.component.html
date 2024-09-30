@@ -2,7 +2,7 @@
   <h2 class="text-lg font-semibold mb-4 text-neutral-50 ">{{ column.listName }}</h2>
 
   <div class="flex flex-col space-y-2">
-    @for (task of column.list; track task.name;) {
+    @for (task of column.list; track task.id;) {
       <app-card [task]="task" class="cursor-move" draggable="true" (dragstart)="dragStart($event, task, column.status)"></app-card>
       }
   </div>

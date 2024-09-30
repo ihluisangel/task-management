@@ -1,3 +1,6 @@
+import { Tag } from "./tag.type";
+import { UserEntity } from "./user.entity";
+
 export type StatusTask = 'BACKLOG'| 'CANCELLED'|'DONE'|'IN_PROGRESS'|'TODO'
 
 
@@ -8,13 +11,9 @@ export interface TaskEntity {
     pointEstimate: string;
     status:        StatusTask;
     dueDate:       Date;
-    tags:          string[];
+    tags:          Tag[];
     position:      number;
-    assignee:      AssigneeEntity;
+    assignee:      UserEntity;
 }
 
-export interface AssigneeEntity {
-    avatar:   string;
-    id:       string;
-    fullName: string;
-}
+
