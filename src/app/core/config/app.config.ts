@@ -6,9 +6,11 @@ import {
 import { provideRouter } from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { provideApollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { provideToastr } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import {
   TaskImplementationService
@@ -26,6 +28,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    provideAnimations(),
+    provideToastr(),
     provideApollo(() => {
       const httpLink = inject(HttpLink);
       const link = ApolloLink.from([

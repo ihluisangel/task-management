@@ -1,4 +1,7 @@
 import { Injectable, signal } from '@angular/core';
+import {
+  ErrorHandlingService
+} from '../../../core/error-handler/error-handling.service';
 import { ColumnEntity } from '../../../domain/entities/column.entity';
 import { TaskEntity } from '../../../domain/entities/task.entity';
 import {
@@ -46,6 +49,9 @@ export class TaskStateService {
     },
   ]);
 
+  taskLoading = signal<boolean>(false)
+  taskLength = signal<number>(0)
+
   private _view = signal<'list' | 'grid'>('grid');
 
   private _editTask = signal<TaskEntity | null>(null)
@@ -54,7 +60,8 @@ export class TaskStateService {
     private _getTaskUseCase: GetTasksUseCase,
     private _createTaskUseCase: CreateTaskUseCase,
     private _updateTaskUseCase: UpdateTaskUseCase,
-    private _deleteTaskUseCase: DeleteTaskUseCase
+    private _deleteTaskUseCase: DeleteTaskUseCase,
+    private _errorHandler: ErrorHandlingService
   ) {}
 
   get columns(): ColumnEntity[] {
@@ -77,13 +84,18 @@ export class TaskStateService {
   }
 
   loadTasks(): void {
+    this.taskLoading.set(true)
     this._getTaskUseCase.execute().subscribe({
       next: (data: TaskEntity[]) => {
         this.setTaskToColumns(data);
+        this.taskLength.set(data.length)
       },
       error: (error) => {
-        console.error('Error', error);
+       this._errorHandler.handleError(error)
       },
+      complete: ()=> {
+        this.taskLoading.set(false)
+      }
     });
   }
 
@@ -145,7 +157,7 @@ export class TaskStateService {
         this.refreshTask(data);
       },
       error: (error) => {
-        console.error('Error', error);
+        this._errorHandler.handleError(error)
       },
     });
   }
@@ -163,7 +175,7 @@ export class TaskStateService {
         this.refreshTask(data);
       },
       error: (error) => {
-        console.error('Error', error);
+        this._errorHandler.handleError(error)
       },
     });
   }
@@ -174,7 +186,7 @@ export class TaskStateService {
         this.removeTask(params.id, params.status);
       },
       error: (error) => {
-        console.error('Error', error);
+        this._errorHandler.handleError(error)
       },
     });
   }

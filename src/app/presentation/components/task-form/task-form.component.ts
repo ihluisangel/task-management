@@ -8,7 +8,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { initDropdowns } from 'flowbite';
@@ -54,7 +54,7 @@ export class TaskFormComponent implements AfterViewInit, OnInit {
 
   constructor(
     public userState: UserStateService,
-    public taskState: TaskStateService
+    public taskState: TaskStateService,
   ) {
     effect(()=>{
       if(taskState.editTask == null){

@@ -61,6 +61,10 @@ export class CardComponent {
     this.openModal('crud-modal');
   }
 
+  filterTags(tags :Tag []){
+    return tags.filter((value, index)=> index <=2)
+  }
+
   openModal(id: string) {
     this.modalService.open(id);
   }

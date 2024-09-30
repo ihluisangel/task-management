@@ -1,4 +1,7 @@
 import { Injectable, signal } from '@angular/core';
+import {
+  ErrorHandlingService
+} from '../../../core/error-handler/error-handling.service';
 import { UserEntity } from '../../../domain/entities/user.entity';
 import {
   GetUsersUseCase
@@ -10,9 +13,14 @@ import {
 export class UserStateService {
   private _users = signal<UserEntity[]>([]);
 
-  constructor(private _getUsersUseCase: GetUsersUseCase) {}
+  constructor(
+    private _getUsersUseCase: GetUsersUseCase,
+    private _errorHandler: ErrorHandlingService
+  ) {}
 
-  get users(): UserEntity[] { return this._users()}
+  get users(): UserEntity[] {
+    return this._users();
+  }
 
   loadUsers(): void {
     this._getUsersUseCase.execute().subscribe({
@@ -20,7 +28,7 @@ export class UserStateService {
         this._users.set(data);
       },
       error: (error) => {
-        console.error('Error', error);
+        this._errorHandler.handleError(error);
       },
     });
   }

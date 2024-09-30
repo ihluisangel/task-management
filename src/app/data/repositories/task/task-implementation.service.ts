@@ -162,7 +162,7 @@ export class TaskImplementationService extends TaskRepository {
     id: string;
   }): Observable<void> {
 
-    const CREATE_TASK = gql`
+    const DELETE_TASK = gql`
     mutation deleteTask($input: DeleteTaskInput!) {
       deleteTask(input: $input) {
         id
@@ -183,7 +183,7 @@ export class TaskImplementationService extends TaskRepository {
   `;
     return this.apollo
       .mutate<{deleteTask: void}>({
-        mutation: CREATE_TASK,
+        mutation: DELETE_TASK,
         variables: {
           input: {
             id: params.id,

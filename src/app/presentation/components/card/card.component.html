@@ -33,8 +33,22 @@
     <app-label type="neutral" [name]="task.dueDate | dueDate" icon="heroClock" />
   </div>
   <div class="flex justify-start px-4 pt-4 space-x-1">
-    @for (tag of task.tags; track $index) {
-      <app-label [type]="getTag(tag, 'type')" [name]="getTag(tag, 'name')" />
+
+
+    @if (task.tags.length <=  3) {
+      @for (tag of task.tags; track $index) {
+        <app-label [type]="getTag(tag, 'type')" [name]="getTag(tag, 'name')" />
+      }
+    } @else {
+      <div class="flex flex-row justify-center space-x-1">
+        @for (tag1 of filterTags(task.tags); track $index) {
+          <app-label [type]="getTag(tag1, 'type')" [name]="getTag(tag1, 'name')" />
+        }
+
+        @if (task.tags.length -3 > 1) {
+          <span class="ml-1 text-neutral-50">{{task.tags.length -3}} +</span>
+        }
+      </div>
     }
 
   </div>
