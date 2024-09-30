@@ -11,19 +11,19 @@
     <div [id]="'dropdown'+task.id" class="z-20 hidden text-base list-none  rounded-lg shadow w-36 bg-neutral-200 border border-neutral-100">
       <ul class="py-2" [attr.aria-labelledby]="'dropDownBtn'+task.id">
         <li>
-          <a href="#"
-            class="block px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+          <button (click)="openUpdate(task)"
+            class="w-full flex flex-row justify-start px-5 py-2 text-sm  hover:bg-gray-600 text-gray-200 dark:hover:text-white">
             <ng-icon name="heroPencil" class="mr-2"></ng-icon>
             Edit
-          </a>
+        </button>
         </li>
 
         <li>
-          <a href="#"
-            class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 dark:hover:text-white">
+          <button (click)="deleteTask(task)"
+            class= "w-full flex flex-row justify-start px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 dark:hover:text-white">
             <ng-icon name="heroTrash" class="mr-2"></ng-icon>
             Delete
-          </a>
+          </button>
         </li>
       </ul>
     </div>

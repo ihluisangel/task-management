@@ -79,7 +79,7 @@
     </div>
     <div class="flex flex-row space-x-2 justify-end">
       <button class="button-ligth" (click)="finish.emit()" >Cancel</button>
-      <button class="button-primary" (click)="submit()">Update</button>
+      <button class="button-primary" (click)="submit()">{{taskState.editTask === null ? 'Save': 'Update'}}</button>
     </div>
   </div>
 </div>

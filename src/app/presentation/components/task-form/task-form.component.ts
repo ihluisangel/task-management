@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  effect,
   ElementRef,
   EventEmitter,
   OnInit,
@@ -37,6 +38,7 @@ export class TaskFormComponent implements AfterViewInit, OnInit {
   @ViewChild('dropdown1') dropdown1: ElementRef<HTMLDivElement> | undefined;
 
   form: any = {
+    name: null,
     pointEstimate: null,
     dueDate: null,
     assignee: null,
@@ -53,7 +55,27 @@ export class TaskFormComponent implements AfterViewInit, OnInit {
   constructor(
     public userState: UserStateService,
     public taskState: TaskStateService
-  ) {}
+  ) {
+    effect(()=>{
+      if(taskState.editTask == null){
+        this.form = {
+          name: null,
+          pointEstimate: null,
+          dueDate: null,
+          assignee: null,
+          tags: [],
+        };
+      } else {
+        this.form = {
+          name: taskState.editTask.name,
+          pointEstimate: taskState.editTask.pointEstimate,
+          dueDate: taskState.editTask.dueDate,
+          assignee: taskState.editTask.assignee,
+          tags: taskState.editTask.tags,
+        };
+      }
+    })
+  }
 
   ngOnInit() {
     this.userState.loadUsers();
@@ -106,20 +128,42 @@ export class TaskFormComponent implements AfterViewInit, OnInit {
   }
 
   submit(){
-    const params: {
-      name: string;
-      pointEstimate: string;
-      dueDate: Date;
-      tags: string[];
-      assigneeId: string;
-    } = {
-      name: this.form.name,
-      pointEstimate: this.form.pointEstimate as string,
-      dueDate: this.form.dueDate,
-      tags: this.form.tags,
-      assigneeId: this.form.assignee.id
+    if(this.taskState.editTask === null){
+      const params: {
+        name: string;
+        pointEstimate: string;
+        dueDate: Date;
+        tags: string[];
+        assigneeId: string;
+      } = {
+        name: this.form.name,
+        pointEstimate: this.form.pointEstimate as string,
+        dueDate: this.form.dueDate,
+        tags: this.form.tags,
+        assigneeId: this.form.assignee.id
+      }
+      this.taskState.createTask(params)
+    } else {
+      const params: {
+        id: string;
+        name: string;
+        pointEstimate: string;
+        dueDate: Date;
+        tags: string[];
+        assigneeId: string;
+        status: string;
+      } = {
+        id: this.taskState.editTask.id!,
+        name: this.form.name,
+        pointEstimate: this.form.pointEstimate as string,
+        dueDate: this.form.dueDate,
+        tags: this.form.tags,
+        assigneeId: this.form.assignee.id,
+        status : this.taskState.editTask.status
+      }
+      this.taskState.updateTask(params)
     }
-    this.taskState.createTask(params)
+
     this.save.emit(true)
   }
 

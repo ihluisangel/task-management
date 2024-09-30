@@ -13,10 +13,10 @@
     <app-search-bar />
     <div class="mt-6 flex flex-row justify-between items-center">
       <div class="flex space-x-0">
-        <button class="btn-primary-outline btn-icon">
+        <button class=" btn-icon" [class]="taskState.view === 'grid'? 'button-ligth':'btn-primary-outline' " (click)="taskState.view = 'list'">
           <ng-icon size="24" name="heroBars3"></ng-icon>
         </button>
-        <button class="button-ligth btn-icon">
+        <button class="btn-icon" [class]="taskState.view === 'grid'? 'btn-primary-outline':'button-ligth' "  (click)="taskState.view = 'grid'">
           <ng-icon size="24" name="heroSquares2x2"></ng-icon>
         </button>
       </div>
@@ -25,14 +25,14 @@
       </button>
     </div>
     <div class="mt-6">
-      <app-grid />
+      @if (taskState.view === 'grid') {
+        <app-grid />
+      } @else {
+        <app-list></app-list>
+      }
     </div>
   </div>
 </div>
-
-<!-- Modal toggle -->
-
-<!-- Main modal -->
 
 <app-modal id="crud-modal">
 <app-task-form (save)="beforeCloseModal($event)" (finish)="closeModal('crud-modal')"/>

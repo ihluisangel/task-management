@@ -31,10 +31,6 @@ export class GridComponent implements AfterViewChecked {
     effect(() => {
       this.columns = this.taskState.columns;
       this.initialized = false;
-
-      /* setTimeout(() => {
-        initDropdowns()
-      }, 0); */
     });
   }
   ngAfterViewChecked(){
@@ -76,6 +72,17 @@ export class GridComponent implements AfterViewChecked {
 
         // Add the task to the target column
         targetColumn.list.push(this.draggedTask);
+
+        // after add task, update in backedn
+        this.taskState.updateTask({
+          id: this.draggedTask.id!,
+          name: this.draggedTask.name,
+          assigneeId: this.draggedTask.assignee.id,
+          status: targetListName,
+          tags: this.draggedTask.tags,
+          pointEstimate: this.draggedTask.pointEstimate,
+          dueDate: this.draggedTask.dueDate
+        })
       }
     }
 

@@ -10,4 +10,18 @@ export abstract class TaskRepository {
     tags: string[];
     assigneeId: string;
   }): Observable<TaskEntity>;
+
+  abstract updateTask(params: {
+    id: string;
+    name: string;
+    pointEstimate: string;
+    dueDate: Date;
+    status: string;
+    tags: string[];
+    assigneeId: string;
+  }): Observable<TaskEntity>;
+
+  abstract deleteTask(params: {
+    id: string;
+  }): Observable<void>;
 }

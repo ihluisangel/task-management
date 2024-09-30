@@ -102,4 +102,102 @@ export class TaskImplementationService extends TaskRepository {
         })
       );
   }
+
+  override updateTask(params: {
+    id: string;
+    name: string;
+    pointEstimate: string;
+    dueDate: Date;
+    status: string;
+    tags: string[];
+    assigneeId: string;
+  }): Observable<TaskEntity> {
+
+    const UPDATE_TASK = gql`
+    mutation UpdateTask($input: UpdateTaskInput!) {
+      updateTask(input: $input) {
+        id
+        name
+        createdAt
+        pointEstimate
+        status
+        dueDate
+        tags
+        position
+        assignee {
+          avatar
+          id
+          fullName
+        }
+      }
+    }
+  `;
+    return this.apollo
+      .mutate<{ updateTask: TaskEntity }>({
+        mutation: UPDATE_TASK,
+        variables: {
+          input: {
+            id: params.id,
+            name: params.name,
+            pointEstimate: params.pointEstimate,
+            dueDate: params.dueDate,
+            tags: params.tags,
+            assigneeId: params.assigneeId,
+            status: params.status,
+          },
+        },
+      })
+      .pipe(
+        map((result) => {
+          const t = result.data ;
+          const createdTask  = t?.updateTask as TaskModel | null;
+          if (!createdTask) {
+            throw new Error('Error update task');
+          }
+          return this.taskMapper.mapFrom(createdTask);
+        })
+      );
+  }
+  override deleteTask(params: {
+    id: string;
+  }): Observable<void> {
+
+    const CREATE_TASK = gql`
+    mutation deleteTask($input: DeleteTaskInput!) {
+      deleteTask(input: $input) {
+        id
+        name
+        createdAt
+        pointEstimate
+        status
+        dueDate
+        tags
+        position
+        assignee {
+          avatar
+          id
+          fullName
+        }
+      }
+    }
+  `;
+    return this.apollo
+      .mutate<{deleteTask: void}>({
+        mutation: CREATE_TASK,
+        variables: {
+          input: {
+            id: params.id,
+          },
+        },
+      })
+      .pipe(
+        map((result) => {
+          const t = result.data ;
+          const createdTask  = t?.deleteTask;
+          if (!createdTask) {
+            throw new Error('Error delete task');
+          }
+        })
+      );
+  }
 }

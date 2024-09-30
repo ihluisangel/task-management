@@ -10,7 +10,11 @@ export interface TransactionCreateTask {
     createTask: TaskModel;
   };
 }
-
+export interface TransactionUpdateTask {
+  data: {
+    updateTask: TaskModel;
+  };
+}
 export interface DataTask {
   tasks: TaskModel[];
 }

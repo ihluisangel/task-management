@@ -17,6 +17,7 @@ import {
 } from '../../components/task-form/task-form.component';
 import { TaskStateService } from '../../state/task/task-state.service';
 import { GridComponent } from './grid/grid.component';
+import { ListComponent } from './list/list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +28,7 @@ import { GridComponent } from './grid/grid.component';
     SidebarComponent,
     SearchBarComponent,
     GridComponent,
+    ListComponent,
     ModalComponent,
     TaskFormComponent
   ],
@@ -38,13 +40,16 @@ export class DashboardComponent implements OnInit {
   constructor(
     public taskState: TaskStateService,
     private modalService: ModalService
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
     this.taskState.loadTasks();
   }
 
   openModal(id: string) {
+    this.taskState.editTask = null;
     this.modalService.open(id);
   }
 

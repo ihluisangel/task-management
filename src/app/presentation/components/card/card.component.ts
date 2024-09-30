@@ -13,8 +13,9 @@ import { Tag, TagInfo, tasktag } from '../../../domain/entities/tag.type';
 import { TaskEntity } from '../../../domain/entities/task.entity';
 import { DueDatePipe } from '../../pipes/due-date.pipe';
 import { PointEstimatePipe } from '../../pipes/point-estimate.pipe';
+import { TaskStateService } from '../../state/task/task-state.service';
 import { LabelComponent } from '../label/label.component';
-
+import { ModalService } from '../modal/modal.service';
 
 @Component({
   selector: 'app-card',
@@ -42,8 +43,25 @@ import { LabelComponent } from '../label/label.component';
 export class CardComponent {
   @Input() task!: TaskEntity;
 
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   getTag(code: Tag, label: keyof TagInfo) :any {
-    return tasktag[code][label] ;
+  constructor(
+    public taskState: TaskStateService,
+    private modalService: ModalService
+  ) {}
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getTag(code: Tag, label: keyof TagInfo): any {
+    return tasktag[code][label];
+  }
+
+  deleteTask(task: TaskEntity) {
+    this.taskState.deleteTask({ id: task.id!, status: task.status });
+  }
+  openUpdate(task: TaskEntity) {
+    this.taskState.editTask = task;
+    this.openModal('crud-modal');
+  }
+
+  openModal(id: string) {
+    this.modalService.open(id);
   }
 }

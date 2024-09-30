@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TaskStateService } from '../../state/task/task-state.service';
 import { SidebarItemComponent } from '../sidebar-item/sidebar-item.component';
 
 @Component({
@@ -9,5 +10,7 @@ import { SidebarItemComponent } from '../sidebar-item/sidebar-item.component';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
+
+  constructor(public taskState: TaskStateService){}
 
 }

@@ -1,6 +1,6 @@
-<button class="flex items-center p-3  font-semibold border-r-4 group"
-  [ngClass]="{ 'border-primary-300': selected, 'border-transparent': !selected , 'text-neutral-100': !selected, 'text-primary-300' : selected }"
+<button class="w-full flex items-center justify-start p-3  font-semibold border-r-4 group"
+  [ngClass]="{ 'border-primary-300': selected, 'border-transparent': !selected , 'text-neutral-100': !selected, 'text-primary-300' : selected  }"
   (click)="onPress()">
   <ng-icon class="flex-shrink-0 !w-6 !h-6 transition duration-75  group-hover:text-primary-300" [name]="icon"></ng-icon>
-  <span class="flex-1 ms-4 whitespace-nowrap group-hover:text-primary-300">{{name}}</span>
+  <span class="flex-1 ms-4 whitespace-nowrap group-hover:text-primary-300 text-start">{{name}}</span>
 </button>

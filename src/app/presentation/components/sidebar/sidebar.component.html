@@ -7,10 +7,10 @@
       </div>
       <ul class="space-y-0  mt-5">
         <li>
-          <app-sidebar-item [name]="'DASHBOARD'" [icon]="'heroSquares2x2'" />
+          <app-sidebar-item [name]="'DASHBOARD'" [icon]="'heroSquares2x2'" [selected]="taskState.view === 'grid'"  (press)="taskState.view = 'grid'"/>
         </li>
         <li>
-          <app-sidebar-item [name]="'MY TASK'" [icon]="'heroBars3'" />
+          <app-sidebar-item [name]="'MY TASK'" [icon]="'heroBars3'"[selected]="taskState.view === 'list'" (press)="taskState.view = 'list'"/>
         </li>
       </ul>
     </div>
