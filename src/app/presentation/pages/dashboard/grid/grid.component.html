@@ -1,10 +1,13 @@
-
 <div class="overflow-x-auto">
   <div class="grid grid-flow-col auto-cols-max gap-4">
     @for (column of columns; track column.status) {
-      <app-task-column [column]="column" [dragStart]="onDragStart.bind(this)"
-      [dragOver]="onDragOver.bind(this)"
-      [dragDrop]="onDrop.bind(this)"/>
+    <app-task-column [column]="column" [dragStart]="onDragStart.bind(this)" [dragOver]="onDragOver.bind(this)" [dragDrop]="onDrop.bind(this)" />
+    } @empty {
+    <div class="flex items-center justify-center w-full h-screen border  rounded-lg  bg-neutral-200 border-gray-700">
+      <div class="px-3 py-1 text-xs font-medium leading-none text-center rounded-full animate-pulse bg-neutral-400 text-neutral-100">
+        Loading...
+      </div>
+    </div>
     }
   </div>
 </div>

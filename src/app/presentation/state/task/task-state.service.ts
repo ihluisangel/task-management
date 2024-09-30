@@ -26,7 +26,7 @@ export class TaskStateService {
     },
     {
       status: 'CANCELLED',
-      listName: 'Backlog',
+      listName: 'Cancelled',
       list: [],
     },
     {
