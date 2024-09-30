@@ -68,7 +68,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 *The Grid View displays tasks in a structured, easy-to-read format.*
 
 ### Edit Modal
-![Edit Modal](screenshots/form-modal.png)
+![Edit Modal](screenshots/form-view.png)
 *The Edit Modal allows users to modify task details efficiently.*
 
 ## Further help
